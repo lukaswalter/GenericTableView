@@ -6,7 +6,7 @@
 //  Copyright © 2018 Lukas Walter. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 ///Very basic model holding a text
 struct SpecificModel {

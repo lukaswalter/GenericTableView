@@ -9,15 +9,11 @@
 import UIKit
 import Foundation
 
-open class TableDataSource<DataManager: TableDataManager, Cell: UITableViewCell>:
-    NSObject,
-    UITableViewDataSource,
-    UITableViewDelegate
-    where Cell: ConfigurableCell, DataManager.T == Cell.T {
+open class TableDataSource<DataManager: TableDataManager, Cell: UITableViewCell>: NSObject, UITableViewDataSource, UITableViewDelegate where Cell: ConfigurableCell, DataManager.T == Cell.T {
     
-    let dataManager:                               DataManager
-    let tableView:                              UITableView
-    public var tableSelectionHandler:           TableSelectionHandler?
+    public  let dataManager:                        DataManager
+    private let tableView:                          UITableView
+    public  var tableSelectionHandler:              TableSelectionHandler?
     
     init(tableView: UITableView, dataManager: DataManager) {
         self.tableView = tableView
@@ -43,10 +39,11 @@ open class TableDataSource<DataManager: TableDataManager, Cell: UITableViewCell>
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cell.reuseIdentifier,
-                                                            for: indexPath) as? Cell else {
-                                                                return UITableViewCell()
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cell.reuseIdentifier, for: indexPath) as? Cell
+            else {
+                return UITableViewCell()
+            }
+        
         let model = dataManager.model(at: indexPath)
         if let model = model {
             cell.loadModel(model)
